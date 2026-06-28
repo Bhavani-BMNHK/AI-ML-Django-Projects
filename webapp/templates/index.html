@@ -1,0 +1,87 @@
+{% extends "auth_base.html" %}
+{% block content %}
+
+<div style="max-width:900px;margin:0 auto;padding:32px 16px;">
+
+  <!-- Header -->
+  <div style="margin-bottom:40px;">
+    <h1 style="font-size:26px;font-weight:500;margin:0 0 6px;">Welcome🤗 to</h1>
+    <h1 style="font-size:26px;font-weight:500;margin:0 0 6px;">CCR Projects Dashboard</h1>
+    <p style="color:var(--color-text-secondary);margin:0;font-size:19px;">
+     - Choose a project below to make a prediction 👇.
+    </p>
+  </div>
+
+  <!-- Project Cards -->
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;margin-bottom:48px;">
+
+    <!-- Card 1: Cinnamon (Project 1) -->
+    <div style="border:1px solid var(--color-border-tertiary);border-radius:16px;
+                padding:28px;background:var(--color-background-secondary);">
+
+      <h2 style="margin:0;font-size:16px;font-weight:500;">Cinnamon Quality</h2>
+      <p style="margin:0 0 16px;font-size:12px;color:var(--color-text-secondary);">Project 1</p>
+
+      <p style="font-size:13px;color:var(--color-text-secondary);margin-bottom:20px;">
+        Enter chemical properties to classify cinnamon quality.
+      </p>
+
+      <a href="{% url 'project1' %}"
+         style="display:block;text-align:center;padding:11px;border-radius:10px;
+                background:var(--color-background-warning);color:var(--color-text-warning);
+                text-decoration:none;font-size:14px;">
+        Classify Quality
+      </a>
+    </div>
+
+    <!-- Card 2: Crop (Project 2) -->
+    <div style="border:1px solid var(--color-border-tertiary);border-radius:16px;
+                padding:28px;background:var(--color-background-secondary);">
+
+      <h2 style="margin:0;font-size:16px;font-weight:500;">Crop Recommendation</h2>
+      <p style="margin:0 0 16px;font-size:12px;color:var(--color-text-secondary);">Project 2</p>
+
+      <p style="font-size:13px;color:var(--color-text-secondary);margin-bottom:20px;">
+        Predict best crop using soil and climate parameters.
+      </p>
+
+      <a href="{% url 'project2' %}"
+         style="display:block;text-align:center;padding:11px;border-radius:10px;
+                background:var(--color-background-success);color:var(--color-text-success);
+                text-decoration:none;font-size:14px;">
+        Predict Crop
+      </a>
+    </div>
+
+    <!-- Card 3: Resume (Project 3) -->
+    <div style="border:1px solid var(--color-border-tertiary);border-radius:16px;
+                padding:28px;background:var(--color-background-secondary);">
+
+      <h2 style="margin:0;font-size:16px;font-weight:500;">Resume Analyzer</h2>
+      <p style="margin:0 0 16px;font-size:12px;color:var(--color-text-secondary);">Project 3</p>
+
+      <p style="font-size:13px;color:var(--color-text-secondary);margin-bottom:20px;">
+        Upload resume and get AI-based score and suggestions.
+      </p>
+
+      <a href="{% url 'project3' %}"
+         style="display:block;text-align:center;padding:11px;border-radius:10px;
+                background:var(--color-background-info);color:var(--color-text-info);
+                text-decoration:none;font-size:14px;">
+        Analyze Resume
+      </a>
+    </div>
+
+  </div>
+
+  <!-- Logout -->
+  <div style="text-align:center;margin-top:32px;">
+    <a href="{% url 'logout' %}"
+       style="font-size:13px;color:var(--color-text-secondary);text-decoration:none;">
+      Sign out
+    </a>
+  </div>
+
+</div>
+
+{% endblock %}

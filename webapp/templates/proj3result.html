@@ -1,0 +1,134 @@
+{% extends "auth_base.html" %}
+{% block content %}
+
+<div style="max-width:700px;margin:0 auto;padding:32px 16px;">
+
+  <!-- Back -->
+  <a href="{% url 'project3' %}"
+     style="font-size:13px;color:var(--color-text-secondary);
+     text-decoration:none;display:inline-block;margin-bottom:24px;">
+    ← Analyze another resume
+  </a>
+
+  {% if error %}
+
+  <!-- ERROR -->
+  <div style="background:#ffe5e5;border-radius:12px;padding:20px;">
+    <p style="margin:0;color:red;font-size:14px;">{{ error }}</p>
+  </div>
+
+  {% else %}
+
+  <!-- 🎯 RESULT BANNER -->
+  <div style="
+      border-radius:16px;
+      padding:32px;
+      text-align:center;
+      margin-bottom:20px;
+      background:#f3f3f3;
+  ">
+      <p style="font-size:12px;letter-spacing:.05em;">PREDICTED ROLE</p>
+
+      <h1 style="font-size:34px;margin:10px 0;">
+        {{ job_label }}
+      </h1>
+
+      <p style="font-size:14px;">
+        Score: <strong>{{ score }}%</strong>
+      </p>
+
+      <p style="font-size:13px;margin-top:8px;">
+        Grade: {{ grade }}
+      </p>
+
+      <div style="font-size:13px;margin-top:10px;">
+         {% for s in suggestion %}
+           <p>{{ s }}</p>
+         {% endfor %}
+  </div>
+  <!-- 📊 MATCH PROGRESS -->
+  <div style="background:#fafafa;border-radius:14px;padding:20px;margin-bottom:20px;">
+    <p style="font-size:12px;margin-bottom:10px;">MATCH PERCENTAGE</p>
+
+    <div style="width:100%;background:#ddd;border-radius:10px;">
+      <div style="
+          width: {{ match_percent|default:0 }}%;
+          background:#4CAF50;
+          color:white;
+          padding:5px;
+          border-radius:10px;
+          text-align:center;
+          font-size:12px;
+      ">
+        {{ match_percent|default:0 }}%
+      </div>
+    </div>
+  </div>
+
+  <!-- ✅ MATCHED SKILLS -->
+  <div style="background:#eaf7ea;border-radius:14px;padding:20px;margin-bottom:20px;">
+    <p style="font-size:12px;margin-bottom:10px;">MATCHED SKILLS</p>
+
+    {% for s in matched %}
+      <span style="
+        display:inline-block;
+        background:#d4edda;
+        padding:6px 10px;
+        border-radius:8px;
+        margin:4px;
+        font-size:13px;">
+        ✔ {{ s }}
+      </span>
+    {% empty %}
+      <p>No matched skills</p>
+    {% endfor %}
+  </div>
+
+  <!-- ❌ MISSING SKILLS -->
+  <div style="background:#ffe5e5;border-radius:14px;padding:20px;margin-bottom:20px;">
+    <p style="font-size:12px;margin-bottom:10px;">MISSING SKILLS</p>
+
+    {% for s in missing %}
+      <span style="
+        display:inline-block;
+        background:#f8d7da;
+        padding:6px 10px;
+        border-radius:8px;
+        margin:4px;
+        font-size:13px;">
+        ✘ {{ s }}
+      </span>
+    {% empty %}
+      <p>All skills present 🎉</p>
+    {% endfor %}
+  </div>
+
+  <!-- 🌍 LIVE JOBS -->
+  <div style="background:#fafafa;border-radius:14px;padding:20px;margin-bottom:20px;">
+    <p style="font-size:12px;margin-bottom:10px;">LIVE JOB OPENINGS</p>
+
+    {% if real_jobs %}
+      {% for job in real_jobs %}
+        <div style="margin-bottom:12px;">
+          <strong>{{ job.title }}</strong><br>
+          <span style="font-size:13px;">
+            {{ job.company }} | {{ job.location }}
+          </span><br>
+
+          <a href="{{ job.link }}" target="_blank"
+             style="font-size:12px;color:#007bff;text-decoration:none;">
+            Apply →
+          </a>
+        </div>
+        <hr>
+      {% endfor %}
+    {% else %}
+      <p>No jobs found</p>
+    {% endif %}
+  </div>
+
+  {% endif %}
+
+</div>
+
+{% endblock %}

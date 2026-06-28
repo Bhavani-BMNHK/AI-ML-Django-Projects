@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ML Projects</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --color-background-primary:   #ffffff;
+      --color-background-secondary: #f5f4f0;
+      --color-background-tertiary:  #eeece6;
+      --color-background-success:   #eaf3de;
+      --color-background-warning:   #faeeda;
+      --color-background-danger:    #fcebeb;
+      --color-background-info:      #e6f1fb;
+
+      --color-text-primary:   #1a1a18;
+      --color-text-secondary: #5f5e5a;
+      --color-text-success:   #3b6d11;
+      --color-text-warning:   #854f0b;
+      --color-text-danger:    #a32d2d;
+      --color-text-info:      #185fa5;
+
+      --color-border-tertiary:  rgba(0,0,0,0.10);
+      --color-border-secondary: rgba(0,0,0,0.18);
+
+      --border-radius-md: 8px;
+      --border-radius-lg: 12px;
+      --border-radius-xl: 16px;
+      --font-sans: "Segoe UI", system-ui, -apple-system, sans-serif;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --color-background-primary:   #1c1c1a;
+        --color-background-secondary: #252522;
+        --color-background-tertiary:  #2c2c2a;
+        --color-background-success:   #173404;
+        --color-background-warning:   #412402;
+        --color-background-danger:    #501313;
+        --color-background-info:      #042c53;
+
+        --color-text-primary:   #e8e6de;
+        --color-text-secondary: #9c9a92;
+        --color-text-success:   #c0dd97;
+        --color-text-warning:   #fac775;
+        --color-text-danger:    #f7c1c1;
+        --color-text-info:      #b5d4f4;
+
+        --color-border-tertiary:  rgba(255,255,255,0.10);
+        --color-border-secondary: rgba(255,255,255,0.18);
+      }
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--color-background-tertiary);
+      color: var(--color-text-primary);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    /* Nav */
+    nav {
+      background: var(--color-background-primary);
+      border-bottom: 1px solid var(--color-border-tertiary);
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 52px;
+    }
+    .nav-brand {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--color-text-primary);
+      text-decoration: none;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .nav-links a {
+      font-size: 13px;
+      color: var(--color-text-secondary);
+      text-decoration: none;
+    }
+    .nav-links a:hover { color: var(--color-text-primary); }
+
+    /* Main */
+    main { padding: 8px 0; }
+
+    /* Input focus */
+    input:focus {
+      outline: none;
+      border-color: var(--color-text-info) !important;
+    }
+
+    /* Messages */
+    .messages {
+      max-width: 560px;
+      margin: 16px auto 0;
+      padding: 0 16px;
+    }
+    .message {
+      padding: 12px 16px;
+      border-radius: var(--border-radius-md);
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+    .message-success { background: var(--color-background-success); color: var(--color-text-success); }
+    .message-error   { background: var(--color-background-danger);  color: var(--color-text-danger); }
+    .message-info    { background: var(--color-background-info);    color: var(--color-text-info); }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="{% url 'home' %}" class="nav-brand">ML Projects</a>
+    <div class="nav-links">
+      {% if request.user.is_authenticated %}
+        <a href="{% url 'project2' %}">Crop</a>
+        <a href="{% url 'project1' %}">Cinnamon</a>
+        <span style="color:var(--color-border-secondary);">|</span>
+        <span style="font-size:13px;color:var(--color-text-secondary);">{{ request.user.username }}</span>
+        <a href="{% url 'logout' %}">Sign out</a>
+      {% else %}
+        <a href="{% url 'login' %}">Sign in</a>
+        <a href="{% url 'signup' %}">Sign up</a>
+      {% endif %}
+    </div>
+  </nav>
+
+  {% if messages %}
+  <div class="messages">
+    {% for message in messages %}
+    <div class="message message-{{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+</body>
+</html>

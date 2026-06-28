@@ -1,0 +1,74 @@
+{% extends "auth_base.html" %}
+{% block content %}
+
+<div style="max-width:380px;margin:80px auto;padding:0 16px;">
+
+  <div style="text-align:center;margin-bottom:32px;">
+    <h1 style="font-size:22px;font-weight:500;margin:0 0 6px;">Create account</h1>
+    <p style="font-size:14px;color:var(--color-text-secondary);margin:0;">
+      Already have an account?
+      <a href="{% url 'login' %}" style="color:var(--color-text-info);text-decoration:none;">Sign in</a>
+    </p>
+  </div>
+
+  {% if messages %}
+  {% for message in messages %}
+  <div style="background:var(--color-background-danger);border-radius:10px;
+              padding:12px 16px;margin-bottom:16px;">
+    <p style="margin:0;font-size:13px;color:var(--color-text-danger);">{{ message }}</p>
+  </div>
+  {% endfor %}
+  {% endif %}
+
+  <form method="POST" action="{% url 'signup' %}">
+    {% csrf_token %}
+
+    <div style="background:var(--color-background-secondary);border-radius:14px;
+                padding:20px;display:flex;flex-direction:column;gap:14px;margin-bottom:14px;">
+      <div>
+        <label style="font-size:12px;color:var(--color-text-secondary);
+                      display:block;margin-bottom:5px;">Username</label>
+        <input type="text" name="username" autocomplete="username" required
+               style="width:100%;padding:10px 12px;border-radius:8px;font-size:14px;
+                      border:1px solid var(--color-border-secondary);
+                      background:var(--color-background-primary);
+                      color:var(--color-text-primary);box-sizing:border-box;">
+      </div>
+      <div>
+        <label style="font-size:12px;color:var(--color-text-secondary);
+                      display:block;margin-bottom:5px;">Email (optional)</label>
+        <input type="email" name="email" autocomplete="email"
+               style="width:100%;padding:10px 12px;border-radius:8px;font-size:14px;
+                      border:1px solid var(--color-border-secondary);
+                      background:var(--color-background-primary);
+                      color:var(--color-text-primary);box-sizing:border-box;">
+      </div>
+      <div>
+        <label style="font-size:12px;color:var(--color-text-secondary);
+                      display:block;margin-bottom:5px;">Password</label>
+        <input type="password" name="password1" autocomplete="new-password" required
+               style="width:100%;padding:10px 12px;border-radius:8px;font-size:14px;
+                      border:1px solid var(--color-border-secondary);
+                      background:var(--color-background-primary);
+                      color:var(--color-text-primary);box-sizing:border-box;">
+      </div>
+      <div>
+        <label style="font-size:12px;color:var(--color-text-secondary);
+                      display:block;margin-bottom:5px;">Confirm password</label>
+        <input type="password" name="password2" autocomplete="new-password" required
+               style="width:100%;padding:10px 12px;border-radius:8px;font-size:14px;
+                      border:1px solid var(--color-border-secondary);
+                      background:var(--color-background-primary);
+                      color:var(--color-text-primary);box-sizing:border-box;">
+      </div>
+    </div>
+
+    <button type="submit"
+            style="width:100%;padding:12px;border-radius:10px;border:none;cursor:pointer;
+                   background:var(--color-text-primary);color:var(--color-background-primary);
+                   font-size:14px;font-weight:500;">
+      Create account
+    </button>
+  </form>
+</div>
+{% endblock %}

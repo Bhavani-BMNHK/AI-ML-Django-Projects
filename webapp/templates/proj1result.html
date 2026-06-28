@@ -1,0 +1,114 @@
+{% extends "auth_base.html" %}
+{% block content %}
+
+<div style="max-width:660px;margin:0 auto;padding:32px 16px;">
+
+  <!-- Back button -->
+  <a href="{% url 'project1' %}"
+     style="font-size:13px;color:var(--color-text-secondary);
+     text-decoration:none;display:inline-block;margin-bottom:24px;">
+    ← Try another sample
+  </a>
+
+  {% if error %}
+  <!-- Error -->
+  <div style="background:#ffe5e5;border-radius:12px;padding:20px;">
+    <p style="margin:0;color:red;font-size:14px;">{{ error }}</p>
+  </div>
+
+  {% else %}
+
+  <!-- RESULT BANNER -->
+  <div style="
+      border-radius:16px;
+      padding:32px;
+      text-align:center;
+      margin-bottom:20px;
+      background:#f3f3f3;
+  ">
+      <p style="font-size:12px;letter-spacing:.05em;">QUALITY GRADE</p>
+
+      <h1 style="font-size:38px;margin:10px 0;">
+        {{ final_prediction }}
+      </h1>
+
+      <p style="font-size:14px;">
+        {{ final_conf }}% confidence
+      </p>
+
+      <p style="font-size:13px;margin-top:10px;">
+        {{ suggestion }}
+      </p>
+  </div>
+
+  <!-- MODEL TABLE -->
+  <div style="background:#fafafa;border-radius:14px;padding:20px;margin-bottom:20px;">
+    <p style="font-size:12px;margin-bottom:12px;">MODEL COMPARISON</p>
+
+    <table style="width:100%;font-size:13px;">
+      <tr>
+        <th align="left">Model</th>
+        <th align="left">Prediction</th>
+        <th align="right">Accuracy</th>
+        <th align="right">Confidence</th>
+      </tr>
+
+      <tr>
+        <td>Logistic Regression</td>
+        <td>{{ lr }}</td>
+        <td align="right">{{ lr_acc }}%</td>
+        <td align="right">{{ lr_conf }}%</td>
+      </tr>
+
+      <tr>
+        <td>Decision Tree</td>
+        <td>{{ dt }}</td>
+        <td align="right">{{ dt_acc }}%</td>
+        <td align="right">{{ dt_conf }}%</td>
+      </tr>
+
+      <tr>
+        <td>Random Forest</td>
+        <td>{{ rf }}</td>
+        <td align="right">{{ rf_acc }}%</td>
+        <td align="right">{{ rf_conf }}%</td>
+      </tr>
+
+      <tr>
+        <td>KNN</td>
+        <td>{{ knn }}</td>
+        <td align="right">{{ knn_acc }}%</td>
+        <td align="right">{{ knn_conf }}%</td>
+      </tr>
+    </table>
+
+    <p style="margin-top:10px;font-size:12px;">
+      Best model: <strong>{{ best }}</strong>
+    </p>
+  </div>
+
+  <!-- 🔥 GRAPH SECTION -->
+  <div style="background:#fafafa;border-radius:14px;padding:20px;margin-bottom:20px;text-align:center;">
+    <p style="font-size:12px;margin-bottom:10px;">MODEL ACCURACY GRAPH</p>
+
+    <img src="data:image/png;base64,{{ graph }}" 
+         alt="Graph"
+         style="max-width:100%;border-radius:10px;">
+  </div>
+
+  <!-- INPUT SUMMARY -->
+  <div style="background:#fafafa;border-radius:14px;padding:20px;">
+    <p style="font-size:12px;margin-bottom:10px;">YOUR INPUTS</p>
+
+    <p>Moisture: {{ inputs.moisture }}</p>
+    <p>Ash: {{ inputs.ash }}</p>
+    <p>Oil: {{ inputs.oil }}</p>
+    <p>Acid: {{ inputs.acid }}</p>
+    <p>Chromium: {{ inputs.chromium }}</p>
+    <p>Coumarin: {{ inputs.coumarin }}</p>
+  </div>
+
+  {% endif %}
+</div>
+
+{% endblock %}

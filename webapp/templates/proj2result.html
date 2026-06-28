@@ -1,0 +1,124 @@
+{% extends "auth_base.html" %}
+{% block content %}
+
+<div style="max-width:660px;margin:0 auto;padding:32px 16px;">
+
+  <!-- Back -->
+  <a href="{% url 'project2' %}"
+     style="font-size:13px;color:var(--color-text-secondary);
+     text-decoration:none;display:inline-block;margin-bottom:24px;">
+    ← Try another prediction
+  </a>
+
+  {% if error %}
+  <div style="background:#ffe5e5;border-radius:12px;padding:20px;">
+    <p style="margin:0;color:red;font-size:14px;">{{ error }}</p>
+  </div>
+
+  {% else %}
+
+  <!-- RESULT -->
+  <div style="background:#eaf7ea;border-radius:16px;
+              padding:32px;text-align:center;margin-bottom:20px;">
+    <p style="font-size:12px;letter-spacing:.05em;">RECOMMENDED CROP</p>
+
+    <h1 style="font-size:38px;margin:10px 0;">
+      {{ result }} 🌾
+    </h1>
+
+    <p style="font-size:14px;">
+      {{ confidence }}% confidence
+    </p>
+  </div>
+
+  <!-- 🔥 TOP 3 CROPS -->
+  <div style="background:#fafafa;border-radius:14px;padding:20px;margin-bottom:20px;">
+    <p style="font-size:12px;margin-bottom:12px;">TOP 3 RECOMMENDED CROPS</p>
+
+    {% for item in top3 %}
+    <div style="margin-bottom:12px;">
+      <div style="display:flex;justify-content:space-between;">
+        <span><strong>{{ item.rank }}. {{ item.crop }}</strong></span>
+        <span>{{ item.confidence }}%</span>
+      </div>
+
+      <div style="height:6px;background:#ddd;border-radius:3px;margin-top:5px;">
+        <div style="height:100%;width:{{ item.bar_width }}%;
+                    background:#4caf50;border-radius:3px;"></div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <!-- MODEL TABLE -->
+  <div style="background:#fafafa;border-radius:14px;padding:20px;margin-bottom:20px;">
+    <p style="font-size:12px;margin-bottom:12px;">MODEL COMPARISON</p>
+
+    <table style="width:100%;font-size:13px;">
+      <tr>
+        <th align="left">Model</th>
+        <th align="left">Prediction</th>
+        <th align="right">Accuracy</th>
+        <th align="right">Confidence</th>
+      </tr>
+
+      <tr>
+        <td>Logistic Regression</td>
+        <td>{{ lr }}</td>
+        <td align="right">{{ lr_acc }}%</td>
+        <td align="right">{{ lr_conf }}%</td>
+      </tr>
+
+      <tr>
+        <td>Decision Tree</td>
+        <td>{{ dt }}</td>
+        <td align="right">{{ dt_acc }}%</td>
+        <td align="right">{{ dt_conf }}%</td>
+      </tr>
+
+      <tr>
+        <td>Random Forest</td>
+        <td>{{ rf }}</td>
+        <td align="right">{{ rf_acc }}%</td>
+        <td align="right">{{ rf_conf }}%</td>
+      </tr>
+
+      <tr>
+        <td>KNN</td>
+        <td>{{ knn }}</td>
+        <td align="right">{{ knn_acc }}%</td>
+        <td align="right">{{ knn_conf }}%</td>
+      </tr>
+    </table>
+
+    <p style="margin-top:10px;font-size:12px;">
+      Best model: <strong>{{ best }}</strong>
+    </p>
+  </div>
+
+  <!-- GRAPH -->
+  <div style="background:#fafafa;border-radius:14px;padding:20px;margin-bottom:20px;text-align:center;">
+    <p style="font-size:12px;margin-bottom:10px;">MODEL ACCURACY GRAPH</p>
+
+    <img src="data:image/png;base64,{{ graph }}"
+         alt="Graph"
+         style="max-width:100%;border-radius:10px;">
+  </div>
+
+  <!-- INPUTS -->
+  <div style="background:#fafafa;border-radius:14px;padding:20px;">
+    <p style="font-size:12px;margin-bottom:10px;">YOUR INPUTS</p>
+
+    <p>Nitrogen: {{ inputs.N }}</p>
+    <p>Phosphorus: {{ inputs.P }}</p>
+    <p>Potassium: {{ inputs.K }}</p>
+    <p>Temperature: {{ inputs.temperature }}</p>
+    <p>Humidity: {{ inputs.humidity }}</p>
+    <p>pH: {{ inputs.ph }}</p>
+    <p>Rainfall: {{ inputs.rainfall }}</p>
+  </div>
+
+  {% endif %}
+</div>
+
+{% endblock %}
